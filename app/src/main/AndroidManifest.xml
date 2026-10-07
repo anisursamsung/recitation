@@ -41,6 +41,16 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
+            android:name=".ui.reader.MorphologyActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.reader.TafsirActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
             android:name=".ui.settings.SettingsActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />

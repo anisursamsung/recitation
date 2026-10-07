@@ -1,5 +1,6 @@
 package com.miqu.android.recitation.ui.reader
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -137,12 +138,19 @@ class ReaderActivity : AppCompatActivity() {
                 }
             },
             onMorphologyClick = { verse ->
-                val sheet = MorphologyBottomSheetFragment.newInstance(verse.surahNumber, verse.verseNumber)
-                sheet.show(supportFragmentManager, "MorphologySheet")
+                val intent = Intent(this, MorphologyActivity::class.java).apply {
+                    putExtra(MorphologyActivity.EXTRA_SURAH, verse.surahNumber)
+                    putExtra(MorphologyActivity.EXTRA_VERSE, verse.verseNumber)
+                }
+                startActivity(intent)
             },
             onTafsirClick = { verse ->
-                val sheet = TafsirBottomSheetFragment.newInstance(verse.surahNumber, verse.verseNumber, verse.id)
-                sheet.show(supportFragmentManager, "TafsirSheet")
+                val intent = Intent(this, TafsirActivity::class.java).apply {
+                    putExtra(TafsirActivity.EXTRA_SURAH, verse.surahNumber)
+                    putExtra(TafsirActivity.EXTRA_VERSE, verse.verseNumber)
+                    putExtra(TafsirActivity.EXTRA_GLOBAL_ID, verse.id)
+                }
+                startActivity(intent)
             }
         )
 
