@@ -53,3 +53,16 @@ captures/
 # OS-specific files
 .DS_Store
 Thumbs.db
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Offline Quran WBW data pipeline heavy outputs
+tools/quran-wbw-pipeline/data/input/
+tools/quran-wbw-pipeline/data/output/
+tools/quran-wbw-pipeline/studio/pages/
+tools/quran-wbw-pipeline/studio/modified/
+tools/quran-wbw-pipeline/**/*.pdf
+
+
