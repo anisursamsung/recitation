@@ -61,16 +61,16 @@ class RootDetailActivity : AppCompatActivity() {
         if (definition.isEmpty()) {
             definition = com.miqu.android.recitation.data.LexiconRepository(this).getRootEntry(rootText)?.definition ?: ""
         }
-
-        binding.textRootArabicLarge.text = rootText
-        binding.textRootArabicLarge.typeface = com.miqu.android.recitation.util.FontHelper.getArabicTypeface(this)
-        binding.textRootFullDefinition.text = definition.ifEmpty { "Root form: $rootText" }
+        val fullDefinition = definition.ifEmpty { "Root form: $rootText" }
         binding.toolbar.title = "Root: \u200E$rootText"
 
         rootsDbHelper = RootsDatabaseHelper.getInstance(this)
         surahRepo = SurahRepository(this)
 
-        adapter = RootOccurrencesAdapter { wordRoot ->
+        adapter = RootOccurrencesAdapter(
+            headerRoot = rootText,
+            headerDefinition = fullDefinition
+        ) { wordRoot ->
             val surah = surahRepo.getSurahById(wordRoot.surah)
             val intent = Intent(this, ReaderActivity::class.java).apply {
                 putExtra(ReaderActivity.EXTRA_SURAH_ID, wordRoot.surah)
@@ -120,11 +120,12 @@ class RootDetailActivity : AppCompatActivity() {
                 if (isFinishing || isDestroyed) return@runOnUiThread
 
                 if (currentOffset == 0) {
-                    binding.textRootTotalOccurrences.text = "$totalCount Occurrences"
+                    adapter.updateTotalCount(totalCount)
                     adapter.submitList(page)
                 } else {
                     adapter.appendList(page)
                 }
+
 
                 currentOffset += page.size
                 hasMore = page.size >= PAGE_SIZE && currentOffset < totalCount
